@@ -1,0 +1,78 @@
+[
+    {
+        "id": 4,
+        "order": 1,
+        "name": "Open House",
+        "location": "Los Angeles",
+        "courtesy": "Credits: Madelline Tolle",
+        "image": "/images/project-gallery/Open_House 2024_03.jpg",
+        "column": 1,
+        "dimension": {
+            "phone": [
+                358,
+                300
+            ],
+            "desktop": [
+                540,
+                720
+            ]
+        }
+    },
+    {
+        "id": 1,
+        "order": 2,
+        "name": "Great Minds",
+        "location": "Washington DC",
+        "courtesy": "Courtesy of Fultz & Singh, K. Thompson",
+        "image": "/images/project-gallery/Great _Minds_Conference Room B_Fultz_and_Singh.jpg",
+        "column": 1,
+        "dimension": {
+            "phone": [
+                358,
+                300
+            ],
+            "desktop": [
+                540,
+                430
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "order": 2,
+        "name": "Garden Party",
+        "location": "Los Angeles",
+        "courtesy": "Credits: Hannah Go",
+        "image": "/images/project-gallery/Garden Party_03.jpg",
+        "column": 2,
+        "dimension": {
+            "phone": [
+                358,
+                300
+            ],
+            "desktop": [
+                540,
+                430
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "order": 3,
+        "name": "Levi's",
+        "location": "San Francisco",
+        "courtesy": "Credits: Brad Knipstein",
+        "image": "/images/project-gallery/Levis_AtriumSeating_08.jpg",
+        "column": 2,
+        "dimension": {
+            "phone": [
+                358,
+                300
+            ],
+            "desktop": [
+                540,
+                430
+            ]
+        }
+    }
+]

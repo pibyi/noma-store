@@ -1,0 +1,4 @@
+export * from './home'
+export * from './rug'
+export * from './faq'
+export * from './the-makers'

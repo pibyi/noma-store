@@ -1,0 +1,25 @@
+version: 1
+frontend:
+    phases:
+        preBuild:
+            commands:
+                - yarn install --frozen-lockfile
+        build:
+            commands:
+                - echo "AIRTABLE_ACCESS_TOKEN=$AIRTABLE_ACCESS_TOKEN" >> .env
+                - echo "AIRTABLE_BASE_ID=$AIRTABLE_BASE_ID" >> .env
+                - echo "NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL" >> .env
+                - echo "SHOPIFY_STORE_DOMAIN=$SHOPIFY_STORE_DOMAIN" >> .env
+                - echo "STOREFRONT_PUBLIC_ACCESS_TOKEN=$STOREFRONT_PUBLIC_ACCESS_TOKEN" >> .env
+                - echo "MAILERLITE_GROUP_ID=$MAILERLITE_GROUP_ID" >> .env
+                - echo "MAILERLITE_API_TOKEN=$MAILERLITE_API_TOKEN" >> .env
+                - echo "REVALIDATE_SECRET=$REVALIDATE_SECRET" >> .env
+                - yarn run build
+    artifacts:
+        baseDirectory: .next
+        files:
+            - '**/*'
+    cache:
+        paths:
+            - .next/cache/**/*
+            - node_modules/**/*
