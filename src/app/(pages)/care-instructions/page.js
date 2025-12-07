@@ -187,7 +187,7 @@ const CareInstructionsPage = () => {
                 </div>
             </section>
 
-            <section className="w-full md:max-w-[690px] bg-nomadory-cream border border-nomadory-primary p-4 py-8 md:py-12 md:p-12">
+            <section className="w-full md:max-w-[690px] bg-nomadory-cream border border-nomadory-primary p-4 py-8 md:py-12 md:p-12 h-fit">
                 <p className="body-small text-justify mb-8 md:mb-12 max-w-[317px] md:max-w-[490px]">
                     Understanding how your rug will perform in different
                     settings helps you choose the perfect piece for your home.
