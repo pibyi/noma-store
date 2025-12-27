@@ -8,7 +8,7 @@ const CraftedSpaces = () => {
         .sort((a, b) => a.order - b.order)
         .slice(0, 3)
         .map((project) => ({
-            image: project.image,
+            image: project.image.home,
             name: project.name,
             location: project.location,
             courtesy: project.courtesy,
@@ -49,6 +49,7 @@ const CraftedSpaces = () => {
                                         width={project.dimension[0]}
                                         src={project.image}
                                         alt={project.name}
+                                        quality={100}
                                         className="w-full h-full border object-cover transition-transform duration-500 ease-out hover:scale-105"
                                     />
                                     {project.courtesy && (

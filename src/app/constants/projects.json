@@ -1,40 +1,34 @@
 [
     {
-        "id": 4,
+        "id": 0,
         "order": 1,
         "name": "Open House",
         "location": "Los Angeles",
         "courtesy": "Credits: Madelline Tolle",
-        "image": "/images/project-gallery/Open_House 2024_03.jpg",
+        "image": {
+            "home": "/images/project-gallery/open-house-home.jpg",
+            "gallery": "/images/project-gallery/open-house-gallery.jpg"
+        },
         "column": 1,
         "dimension": {
-            "phone": [
-                358,
-                300
-            ],
-            "desktop": [
-                540,
-                720
-            ]
+            "phone": [358, 300],
+            "desktop": [540, 720]
         }
     },
     {
         "id": 1,
         "order": 2,
-        "name": "Great Minds",
+        "name": "Confidential Client",
         "location": "Washington DC",
         "courtesy": "Courtesy of Fultz & Singh, K. Thompson",
-        "image": "/images/project-gallery/Great _Minds_Conference Room B_Fultz_and_Singh.jpg",
+        "image": {
+            "home": "/images/project-gallery/confidential-client-home.jpg",
+            "gallery": "/images/project-gallery/confidential-client-gallery.jpg"
+        },
         "column": 1,
         "dimension": {
-            "phone": [
-                358,
-                300
-            ],
-            "desktop": [
-                540,
-                430
-            ]
+            "phone": [358, 300],
+            "desktop": [540, 430]
         }
     },
     {
@@ -43,17 +37,14 @@
         "name": "Garden Party",
         "location": "Los Angeles",
         "courtesy": "Credits: Hannah Go",
-        "image": "/images/project-gallery/Garden Party_03.jpg",
+        "image": {
+            "home": "/images/project-gallery/garden-party-home.jpg",
+            "gallery": "/images/project-gallery/garden-party-gallery.jpg"
+        },
         "column": 2,
         "dimension": {
-            "phone": [
-                358,
-                300
-            ],
-            "desktop": [
-                540,
-                430
-            ]
+            "phone": [358, 300],
+            "desktop": [540, 430]
         }
     },
     {
@@ -62,17 +53,46 @@
         "name": "Levi's",
         "location": "San Francisco",
         "courtesy": "Credits: Brad Knipstein",
-        "image": "/images/project-gallery/Levis_AtriumSeating_08.jpg",
+        "image": {
+            "home": "/images/project-gallery/levis-gallery.jpg",
+            "gallery": "/images/project-gallery/levis-gallery.jpg"
+        },
         "column": 2,
         "dimension": {
-            "phone": [
-                358,
-                300
-            ],
-            "desktop": [
-                540,
-                430
-            ]
+            "phone": [358, 300],
+            "desktop": [540, 430]
+        }
+    },
+    {
+        "id": 4,
+        "order": 3,
+        "name": "Longfellow",
+        "location": "San Francisco",
+        "courtesy": "Credits: Ryan Gobuty",
+        "image": {
+            "home": "/images/project-gallery/longfellow-gallery.jpg",
+            "gallery": "/images/project-gallery/longfellow-gallery.jpg"
+        },
+        "column": 2,
+        "dimension": {
+            "phone": [358, 300],
+            "desktop": [540, 430]
+        }
+    },
+    {
+        "id": 5,
+        "order": 3,
+        "name": "Work in progress",
+        "location": "San Francisco",
+        "courtesy": "Credits: Ye Rin Mok",
+        "image": {
+            "home": "/images/project-gallery/work-in-progress-gallery.jpg",
+            "gallery": "/images/project-gallery/work-in-progress-gallery.jpg"
+        },
+        "column": 1,
+        "dimension": {
+            "phone": [358, 300],
+            "desktop": [540, 430]
         }
     }
 ]

@@ -24,10 +24,11 @@ const ProjectGalleryPage = () => {
                         <div key={project.id}>
                             <div className="mb-4 overflow-hidden">
                                 <Image
-                                    src={project.image}
+                                    src={project.image.gallery}
                                     alt={project.name}
                                     width={project.dimension.phone[0]}
                                     height={project.dimension.phone[1]}
+                                    quality={100}
                                     className="object-cover transition-transform duration-500 ease-out hover:scale-105"
                                 />
                                 {project.courtesy && (
@@ -59,7 +60,7 @@ const ProjectGalleryPage = () => {
                                     )}
                                 >
                                     <Image
-                                        src={project.image}
+                                        src={project.image.gallery}
                                         alt={project.name}
                                         width={project.dimension.desktop[0]}
                                         height={project.dimension.desktop[1]}
@@ -100,7 +101,7 @@ const ProjectGalleryPage = () => {
                                     )}
                                 >
                                     <Image
-                                        src={project.image}
+                                        src={project.image.gallery}
                                         alt={project.name}
                                         width={project.dimension.desktop[0]}
                                         height={project.dimension.desktop[1]}
