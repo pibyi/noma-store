@@ -30,7 +30,7 @@ const CraftedSpaces = () => {
             </div>
             <div className="overflow-x-auto scrollbar-hide -mx-4 md:-mx-6 px-4 md:px-6 mb-10 md:mb-0">
                 <div className="flex gap-4 md:gap-6">
-                    {craftedSpace.map((project) => {
+                    {craftedSpace.map((project, index) => {
                         return (
                             <div
                                 key={project.image}
@@ -50,6 +50,8 @@ const CraftedSpaces = () => {
                                         src={project.image}
                                         alt={project.name}
                                         quality={100}
+                                        priority={index === 0}
+                                        loading={index === 0 ? 'eager' : 'lazy'}
                                         className="w-full h-full border object-cover transition-transform duration-500 ease-out hover:scale-105"
                                     />
                                     {project.courtesy && (

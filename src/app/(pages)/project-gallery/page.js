@@ -20,7 +20,7 @@ const ProjectGalleryPage = () => {
                     with designers to suit every space.
                 </p>
                 <div className="space-y-6 md:hidden">
-                    {sortedProjects.map((project) => (
+                    {sortedProjects.map((project, index) => (
                         <div key={project.id}>
                             <div className="mb-4 overflow-hidden">
                                 <Image
@@ -29,6 +29,8 @@ const ProjectGalleryPage = () => {
                                     width={project.dimension.phone[0]}
                                     height={project.dimension.phone[1]}
                                     quality={100}
+                                    priority={index === 0}
+                                    loading={index === 0 ? 'eager' : 'lazy'}
                                     className="object-cover transition-transform duration-500 ease-out hover:scale-105"
                                 />
                                 {project.courtesy && (
@@ -46,7 +48,7 @@ const ProjectGalleryPage = () => {
                 </div>
                 <div className="hidden md:flex md:flex-row  gap-6">
                     <div className="space-y-12">
-                        {column1Projects.map((project) => (
+                        {column1Projects.map((project, index) => (
                             <div key={project.id}>
                                 <div
                                     className={clsx(
@@ -64,6 +66,9 @@ const ProjectGalleryPage = () => {
                                         alt={project.name}
                                         width={project.dimension.desktop[0]}
                                         height={project.dimension.desktop[1]}
+                                        quality={100}
+                                        priority={index === 0}
+                                        loading={index === 0 ? 'eager' : 'lazy'}
                                         className={clsx(
                                             'object-cover transition-transform duration-500 ease-out hover:scale-105',
                                             (project.dimension.desktop[1] ===
@@ -87,7 +92,7 @@ const ProjectGalleryPage = () => {
                         ))}
                     </div>
                     <div className="space-y-12">
-                        {column2Projects.map((project) => (
+                        {column2Projects.map((project, index) => (
                             <div key={project.id}>
                                 <div
                                     className={clsx(
@@ -105,6 +110,9 @@ const ProjectGalleryPage = () => {
                                         alt={project.name}
                                         width={project.dimension.desktop[0]}
                                         height={project.dimension.desktop[1]}
+                                        quality={100}
+                                        priority={index === 0}
+                                        loading={index === 0 ? 'eager' : 'lazy'}
                                         className={clsx(
                                             'object-cover transition-transform duration-500 ease-out hover:scale-105',
                                             (project.dimension.desktop[1] ===
