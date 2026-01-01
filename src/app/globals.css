@@ -66,6 +66,10 @@
     font-size: 2rem;
 }
 
+@utility glass-morphism {
+    @apply bg-white/25 backdrop-blur-sm;
+}
+
 @utility nomadory-container {
     @apply px-4 md:px-6 mx-auto mt-6 md:mt-12;
 }
