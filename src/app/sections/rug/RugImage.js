@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 
 const RugsImage = ({ product }) => {
     return (
@@ -11,12 +12,13 @@ const RugsImage = ({ product }) => {
                     )}
                     key={url}
                 >
-                    <img
+                    <Image
                         width={350}
                         height={500}
                         src={url}
                         alt={product.title}
                         className="w-full h-full object-cover p-1"
+                        quality={100}
                     />
                 </div>
             ))}

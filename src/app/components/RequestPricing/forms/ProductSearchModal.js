@@ -128,12 +128,13 @@ const ProductSearchModal = ({
                                     role="button"
                                 >
                                     <div className="mb-6 relative">
-                                        <img
+                                        <Image
                                             src={rug.images[0]}
                                             alt={rug.title}
                                             width={330}
                                             height={500}
                                             className="w-full h-auto"
+                                            quality={100}
                                         />
                                         {isSelected && (
                                             <div className="absolute inset-0 h-full w-full bg-nomadory-primary/50">

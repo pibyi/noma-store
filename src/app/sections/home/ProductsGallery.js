@@ -1,5 +1,6 @@
 import { ArrowRoundedRight } from '../../icons'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getProductsByCollection } from '../../actions/shopify'
 
 const ProductGallery = async () => {
@@ -48,12 +49,13 @@ const ProductGallery = async () => {
                             <div className="h-full flex flex-col">
                                 <div className="overflow-hidden">
                                     <div className="w-full h-auto flex items-center justify-center max-w-[320px] md:max-w-[540px]">
-                                        <img
+                                        <Image
                                             src={product.thumbnail}
                                             alt={product.title}
                                             height={756}
                                             width={540}
                                             className="object-contain w-full h-full"
+                                            quality={100}
                                         />
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { ProductName } from '../../components'
 
@@ -48,12 +49,13 @@ const RugsClient = ({ rugs }) => {
                             href={`/rugs/${rug.slug}`}
                             key={rug.id || rug.slug}
                         >
-                            <img
+                            <Image
                                 src={imageUrl}
                                 alt={rug.title}
                                 width={330}
                                 height={500}
                                 className="w-full h-auto transition-transform duration-300 hover:scale-110"
+                                quality={100}
                             />
                             <div className="title mt-4 md:mt-8">
                                 <ProductName name={rug.title} />

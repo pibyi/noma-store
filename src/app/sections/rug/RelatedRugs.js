@@ -1,6 +1,7 @@
 'use client'
 import { Chevron } from '../../icons'
 import Link from 'next/link'
+import Image from 'next/image'
 import React, { useRef, useState, useEffect } from 'react'
 
 const RelatedRugs = ({ relatedProducts }) => {
@@ -89,12 +90,13 @@ const RelatedRugs = ({ relatedProducts }) => {
                             className="w-[200px] flex-shrink-0 group"
                         >
                             <div className="mb-6 w-[200px] h-[310px] overflow-hidden relative">
-                                <img
+                                <Image
                                     src={primaryImage}
                                     alt={node.title}
                                     width={200}
                                     height={310}
                                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                                    quality={100}
                                 />
                             </div>
                             <Name name={node.title} />
