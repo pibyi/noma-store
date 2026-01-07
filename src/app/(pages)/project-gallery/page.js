@@ -32,7 +32,7 @@ const ProjectGalleryPage = () => {
                                     className="object-cover transition-transform duration-500 ease-out hover:scale-105"
                                 />
                                 {project.courtesy && (
-                                    <div className="text-xs -translate-y-6 translate-x-1 text-nomadory-secondary glass-morphism px-2 py-0.5 w-fit">
+                                    <div className="text-xs -translate-y-6 translate-x-1 text-nomadory-secondary px-2 py-0.5 w-fit">
                                         {project.courtesy}
                                     </div>
                                 )}
@@ -74,7 +74,7 @@ const ProjectGalleryPage = () => {
                                         )}
                                     />
                                     {project.courtesy && (
-                                        <div className="-translate-y-8 translate-x-1 text-nomadory-secondary glass-morphism px-2 py-0.5 w-fit">
+                                        <div className="-translate-y-8 translate-x-1 text-nomadory-secondary px-2 py-0.5 w-fit">
                                             {project.courtesy}
                                         </div>
                                     )}
@@ -115,7 +115,7 @@ const ProjectGalleryPage = () => {
                                         )}
                                     />
                                     {project.courtesy && (
-                                        <div className="-translate-y-8 translate-x-1 text-nomadory-secondary glass-morphism px-2 py-0.5 w-fit">
+                                        <div className="-translate-y-8 translate-x-1 text-nomadory-secondary px-2 py-0.5 w-fit">
                                             {project.courtesy}
                                         </div>
                                     )}
