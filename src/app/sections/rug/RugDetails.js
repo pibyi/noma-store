@@ -1,24 +1,44 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { Accordion, RequestPricing } from '../../components'
+import AddToCartButton from '../../components/cart/AddToCartButton'
+import { useCart } from '../../components/cart/CartProvider'
+import { formatPrice } from '../../lib/formatters'
 
 const RugDetails = ({ product, products }) => {
+    const { addToCart } = useCart()
+    const handleAddToCart = async (variantId) => {
+        return await addToCart(variantId, 1)
+    }
+
     return (
         <div>
             <h1 className="mb-10 md:mb-16 font-poppins">
                 <Name name={product.title} />
-                {product.sku && (
-                    <div className="space-y-1 flex items-center gap-2">
+                <div className="">
+                    {product.sku && (
                         <h3 className="font-poppins font-normal text-sm uppercase tracking-wider text-nomadory-primary/70">
                             SKU - {product.sku}
                         </h3>
-                        <p className="text-nomadory-primary/100 font-mono"></p>
-                    </div>
-                )}
+                    )}
+                    <Link
+                        href="/designers/john-doe"
+                        className="font-poppins font-normal text-sm tracking-wider text-nomadory-primary hover:text-nomadory-primary transition-colors"
+                    >
+                        Designed by{' '}
+                        <span className="font-semibold underline uppercase">
+                            Anand Sheth
+                        </span>
+                    </Link>
+                </div>
             </h1>
-            <div className="max-w-[484px] font-poppins text-lg md:text-xl text-nomadory-primary/100 font-[400] text-justify mb-10 md:mb-20 leading-[30px]">
-                {product.description}
-            </div>
+            {product.description && (
+                <div className="max-w-[484px] font-poppins text-lg md:text-xl text-nomadory-primary/100 font-[400] text-justify mb-10 md:mb-20 leading-[30px]">
+                    {product.description}
+                </div>
+            )}
 
             {/* Display new metafields if available */}
             {/* {(product.sku ||
@@ -101,7 +121,32 @@ const RugDetails = ({ product, products }) => {
                     )}
                 </div>
             )} */}
-            <RequestPricing products={products} />
+
+            {product.price && (
+                <div className="mb-8">
+                    <p className="text-sm font-poppins text-nomadory-primary/60">
+                        Price
+                    </p>
+                    <p className="text-3xl md:text-5xl font-normal font-cormorant-garamond text-nomadory-primary">
+                        {formatPrice(product.price, product.currencyCode)}
+                    </p>
+                    {!product.availableForSale && (
+                        <p className="text-nomadory-danger text-sm font-poppins mt-2">
+                            Currently out of stock
+                        </p>
+                    )}
+                </div>
+            )}
+
+            <div className="flex items-center w-full gap-3 md:pr-20 mb-6 md:mb-12">
+                <AddToCartButton
+                    variantId={product.variantId}
+                    onAddToCart={handleAddToCart}
+                    disabled={!product.availableForSale}
+                />
+                <RequestPricing products={products} />
+            </div>
+
             <div className="md:hidden flex gap-4 mb-8">
                 {product.images.map((url) => (
                     <div className="w-full" key={url}>

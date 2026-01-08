@@ -33,7 +33,7 @@ const RequestPricing = ({ params, label = 'Request a Quote', products }) => {
         <>
             <button
                 onClick={showModal}
-                className="btn-brand-primary w-full md:max-w-[350px] mb-6 md:mb-12"
+                className="btn-brand-primary w-full md:max-w-[350px]"
             >
                 {label}
             </button>
