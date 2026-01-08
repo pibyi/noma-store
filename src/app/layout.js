@@ -4,6 +4,8 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { ConfigProvider } from 'antd'
 import { Footer, Header } from './components'
 import { getProducts } from './actions/shopify'
+import { CartProvider } from './components/cart/CartProvider'
+import CartDrawer from './components/cart/CartDrawer'
 import './globals.css'
 
 const poppins = Poppins({
@@ -66,11 +68,14 @@ const RootLayout = async ({ children }) => {
             >
                 <AntdRegistry>
                     <ConfigProvider>
-                        <Header products={products} />
-                        <div className="h-[calc(100vh-var(--nomadory-header-height))] overflow-y-auto">
-                            {children}
-                            <Footer />
-                        </div>
+                        <CartProvider>
+                            <Header products={products} />
+                            <div className="h-[calc(100vh-var(--nomadory-header-height))] overflow-y-auto">
+                                {children}
+                                <Footer />
+                            </div>
+                            <CartDrawer />
+                        </CartProvider>
                     </ConfigProvider>
                 </AntdRegistry>
             </body>

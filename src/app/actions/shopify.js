@@ -87,10 +87,16 @@ async function getProducts(first = 100) {
                 ? edge.node.images.edges.map((edge) => edge.node.url)
                 : []
 
+            const variant = edge.node.variants?.edges?.[0]?.node
+
             product.images = images
             product.thumbnail = images[0] || null
             product.slug = edge.node.handle
-            product.sku = edge.node.variants?.edges?.[0]?.node?.sku || null
+            product.sku = variant?.sku || null
+            product.variantId = variant?.id || null
+            product.price = variant?.price?.amount || null
+            product.currencyCode = variant?.price?.currencyCode || 'USD'
+            product.availableForSale = variant?.availableForSale || false
 
             product.details = {
                 Construction: edge.node.technique?.value,
@@ -194,10 +200,16 @@ async function getProductsByCollection(collectionHandle, first = 100) {
                 ? edge.node.images.edges.map((edge) => edge.node.url)
                 : []
 
+            const variant = edge.node.variants?.edges?.[0]?.node
+
             product.images = images
             product.thumbnail = images[0] || null
             product.slug = edge.node.handle
-            product.sku = edge.node.variants?.edges?.[0]?.node?.sku || null
+            product.sku = variant?.sku || null
+            product.variantId = variant?.id || null
+            product.price = variant?.price?.amount || null
+            product.currencyCode = variant?.price?.currencyCode || 'USD'
+            product.availableForSale = variant?.availableForSale || false
 
             product.details = {
                 Construction: edge.node.technique?.value,
@@ -281,6 +293,11 @@ const GET_PRODUCTS_QUERY = `
                             node {
                                 id
                                 sku
+                                price {
+                                    amount
+                                    currencyCode
+                                }
+                                availableForSale
                             }
                         }
                     }
@@ -425,4 +442,407 @@ const GET_PRODUCTS_BY_COLLECTION_QUERY = `
     }
 `
 
-export { getProducts, getProductsByCollection }
+// ============================================
+// CART OPERATIONS
+// ============================================
+
+/**
+ * Create a new cart
+ * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
+ */
+async function createCart() {
+    try {
+        const response = await client.request(CREATE_CART_MUTATION, {
+            variables: {
+                input: {},
+            },
+        })
+
+        if (response.errors) {
+            console.log('[CREATE_CART_ERROR]', response.errors)
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.errors[0]?.message || 'Failed to create cart',
+                    code: 400,
+                },
+            }
+        }
+
+        return {
+            success: true,
+            data: {
+                cart: response.data.cartCreate.cart,
+            },
+        }
+    } catch (error) {
+        console.log('[CREATE_CART_ERROR]', error)
+        return {
+            success: false,
+            error: {
+                message: error.message || 'Failed to create cart',
+                code: 500,
+            },
+        }
+    }
+}
+
+/**
+ * Add items to cart
+ * @param {string} cartId - The cart ID
+ * @param {Array<{merchandiseId: string, quantity: number}>} lines - Items to add
+ * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
+ */
+async function addToCart(cartId, lines) {
+    try {
+        const response = await client.request(ADD_TO_CART_MUTATION, {
+            variables: {
+                cartId,
+                lines,
+            },
+        })
+
+        if (response.errors) {
+            console.log('[ADD_TO_CART_ERROR]', response.errors)
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.errors[0]?.message ||
+                        'Failed to add items to cart',
+                    code: 400,
+                },
+            }
+        }
+
+        if (response.data.cartLinesAdd.userErrors?.length > 0) {
+            return {
+                success: false,
+                error: {
+                    message: response.data.cartLinesAdd.userErrors[0].message,
+                    code: 400,
+                },
+            }
+        }
+
+        return {
+            success: true,
+            data: {
+                cart: response.data.cartLinesAdd.cart,
+            },
+        }
+    } catch (error) {
+        console.log('[ADD_TO_CART_ERROR]', error)
+        return {
+            success: false,
+            error: {
+                message: error.message || 'Failed to add items to cart',
+                code: 500,
+            },
+        }
+    }
+}
+
+/**
+ * Update cart line quantities
+ * @param {string} cartId - The cart ID
+ * @param {Array<{id: string, quantity: number}>} lines - Lines to update
+ * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
+ */
+async function updateCartLines(cartId, lines) {
+    try {
+        const response = await client.request(UPDATE_CART_LINES_MUTATION, {
+            variables: {
+                cartId,
+                lines,
+            },
+        })
+
+        if (response.errors) {
+            console.log('[UPDATE_CART_LINES_ERROR]', response.errors)
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.errors[0]?.message ||
+                        'Failed to update cart items',
+                    code: 400,
+                },
+            }
+        }
+
+        if (response.data.cartLinesUpdate.userErrors?.length > 0) {
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.data.cartLinesUpdate.userErrors[0].message,
+                    code: 400,
+                },
+            }
+        }
+
+        return {
+            success: true,
+            data: {
+                cart: response.data.cartLinesUpdate.cart,
+            },
+        }
+    } catch (error) {
+        console.log('[UPDATE_CART_LINES_ERROR]', error)
+        return {
+            success: false,
+            error: {
+                message: error.message || 'Failed to update cart items',
+                code: 500,
+            },
+        }
+    }
+}
+
+/**
+ * Remove items from cart
+ * @param {string} cartId - The cart ID
+ * @param {Array<string>} lineIds - Line IDs to remove
+ * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
+ */
+async function removeFromCart(cartId, lineIds) {
+    try {
+        const response = await client.request(REMOVE_FROM_CART_MUTATION, {
+            variables: {
+                cartId,
+                lineIds,
+            },
+        })
+
+        if (response.errors) {
+            console.log('[REMOVE_FROM_CART_ERROR]', response.errors)
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.errors[0]?.message ||
+                        'Failed to remove items from cart',
+                    code: 400,
+                },
+            }
+        }
+
+        if (response.data.cartLinesRemove.userErrors?.length > 0) {
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.data.cartLinesRemove.userErrors[0].message,
+                    code: 400,
+                },
+            }
+        }
+
+        return {
+            success: true,
+            data: {
+                cart: response.data.cartLinesRemove.cart,
+            },
+        }
+    } catch (error) {
+        console.log('[REMOVE_FROM_CART_ERROR]', error)
+        return {
+            success: false,
+            error: {
+                message: error.message || 'Failed to remove items from cart',
+                code: 500,
+            },
+        }
+    }
+}
+
+/**
+ * Get cart details
+ * @param {string} cartId - The cart ID
+ * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
+ */
+async function getCart(cartId) {
+    try {
+        const response = await client.request(GET_CART_QUERY, {
+            variables: {
+                cartId,
+            },
+        })
+
+        if (response.errors) {
+            console.log('[GET_CART_ERROR]', response.errors)
+            return {
+                success: false,
+                error: {
+                    message:
+                        response.errors[0]?.message || 'Failed to fetch cart',
+                    code: 400,
+                },
+            }
+        }
+
+        if (!response.data.cart) {
+            return {
+                success: false,
+                error: {
+                    message: 'Cart not found',
+                    code: 404,
+                },
+            }
+        }
+
+        return {
+            success: true,
+            data: {
+                cart: response.data.cart,
+            },
+        }
+    } catch (error) {
+        console.log('[GET_CART_ERROR]', error)
+        return {
+            success: false,
+            error: {
+                message: error.message || 'Failed to fetch cart',
+                code: 500,
+            },
+        }
+    }
+}
+
+// ============================================
+// CART GRAPHQL QUERIES & MUTATIONS
+// ============================================
+
+const CART_FRAGMENT = `
+    fragment CartFragment on Cart {
+        id
+        checkoutUrl
+        totalQuantity
+        cost {
+            subtotalAmount {
+                amount
+                currencyCode
+            }
+            totalAmount {
+                amount
+                currencyCode
+            }
+        }
+        lines(first: 100) {
+            edges {
+                node {
+                    id
+                    quantity
+                    cost {
+                        totalAmount {
+                            amount
+                            currencyCode
+                        }
+                    }
+                    merchandise {
+                        ... on ProductVariant {
+                            id
+                            title
+                            price {
+                                amount
+                                currencyCode
+                            }
+                            product {
+                                id
+                                title
+                                handle
+                                featuredImage {
+                                    url
+                                    altText
+                                    width
+                                    height
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`
+
+const CREATE_CART_MUTATION = `
+    ${CART_FRAGMENT}
+    mutation createCart($input: CartInput!) {
+        cartCreate(input: $input) {
+            cart {
+                ...CartFragment
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }
+`
+
+const ADD_TO_CART_MUTATION = `
+    ${CART_FRAGMENT}
+    mutation addToCart($cartId: ID!, $lines: [CartLineInput!]!) {
+        cartLinesAdd(cartId: $cartId, lines: $lines) {
+            cart {
+                ...CartFragment
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }
+`
+
+const UPDATE_CART_LINES_MUTATION = `
+    ${CART_FRAGMENT}
+    mutation updateCartLines($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+        cartLinesUpdate(cartId: $cartId, lines: $lines) {
+            cart {
+                ...CartFragment
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }
+`
+
+const REMOVE_FROM_CART_MUTATION = `
+    ${CART_FRAGMENT}
+    mutation removeFromCart($cartId: ID!, $lineIds: [ID!]!) {
+        cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+            cart {
+                ...CartFragment
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }
+`
+
+const GET_CART_QUERY = `
+    ${CART_FRAGMENT}
+    query getCart($cartId: ID!) {
+        cart(id: $cartId) {
+            ...CartFragment
+        }
+    }
+`
+
+export {
+    getProducts,
+    getProductsByCollection,
+    createCart,
+    addToCart,
+    updateCartLines,
+    removeFromCart,
+    getCart,
+}

@@ -1,5 +1,6 @@
 import { LogoFull } from '../logo/logo'
 import { NavigationMenu } from './Navigation'
+import CartIconButton from '../cart/CartIconButton'
 import Link from 'next/link'
 
 const Header = ({ products }) => {
@@ -8,7 +9,10 @@ const Header = ({ products }) => {
             <Link href="/">
                 <LogoFull />
             </Link>
-            <NavigationMenu products={products} />
+            <div className="flex items-center gap-4">
+                <CartIconButton />
+                <NavigationMenu products={products} />
+            </div>
         </header>
     )
 }
