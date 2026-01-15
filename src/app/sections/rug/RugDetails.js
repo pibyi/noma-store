@@ -23,15 +23,17 @@ const RugDetails = ({ product, products }) => {
                             SKU - {product.sku}
                         </h3>
                     )}
-                    <Link
-                        href="/designers/john-doe"
-                        className="font-poppins font-normal text-sm tracking-wider text-nomadory-primary hover:text-nomadory-primary transition-colors"
-                    >
-                        Designed by{' '}
-                        <span className="font-semibold underline uppercase">
-                            Anand Sheth
-                        </span>
-                    </Link>
+                    {product.designer && (
+                        <Link
+                            href={`/designers/${product.designer.handle}`}
+                            className="font-poppins font-normal text-sm tracking-wider text-nomadory-primary hover:text-nomadory-primary transition-colors"
+                        >
+                            Designed by{' '}
+                            <span className="font-semibold underline uppercase">
+                                {product.designer.title}
+                            </span>
+                        </Link>
+                    )}
                 </div>
             </h1>
             {product.description && (
@@ -122,7 +124,7 @@ const RugDetails = ({ product, products }) => {
                 </div>
             )} */}
 
-            {product.price && (
+            {product.isPurchasable && (
                 <div className="mb-8">
                     <p className="text-sm font-poppins text-nomadory-primary/60">
                         Price
@@ -139,11 +141,13 @@ const RugDetails = ({ product, products }) => {
             )}
 
             <div className="flex items-center w-full gap-3 md:pr-20 mb-6 md:mb-12">
-                <AddToCartButton
-                    variantId={product.variantId}
-                    onAddToCart={handleAddToCart}
-                    disabled={!product.availableForSale}
-                />
+                {product?.isPurchasable && (
+                    <AddToCartButton
+                        variantId={product.variantId}
+                        onAddToCart={handleAddToCart}
+                        disabled={!product.availableForSale}
+                    />
+                )}
                 <RequestPricing products={products} />
             </div>
 

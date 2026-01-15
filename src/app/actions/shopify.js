@@ -13,54 +13,6 @@ const client = createStorefrontApiClient({
     },
 })
 
-function parseRichText(richTextValue) {
-    if (!richTextValue) return []
-
-    try {
-        const parsed =
-            typeof richTextValue === 'string'
-                ? JSON.parse(richTextValue)
-                : richTextValue
-
-        const textItems = []
-
-        function traverse(node) {
-            if (!node) return
-
-            if (node.type === 'text' && node.value) {
-                textItems.push(node.value)
-            }
-
-            if (node.type === 'list-item' && node.children) {
-                const listItemText = []
-                node.children.forEach((child) => {
-                    if (child.type === 'text' && child.value) {
-                        listItemText.push(child.value)
-                    } else if (child.children) {
-                        child.children.forEach((c) => {
-                            if (c.type === 'text' && c.value) {
-                                listItemText.push(c.value)
-                            }
-                        })
-                    }
-                })
-                if (listItemText.length > 0) {
-                    textItems.push(listItemText.join(' '))
-                }
-            } else if (node.children) {
-                node.children.forEach((child) => traverse(child))
-            }
-        }
-
-        traverse(parsed)
-        return textItems
-    } catch (error) {
-        return typeof richTextValue === 'string'
-            ? richTextValue.split('\n').filter(Boolean)
-            : []
-    }
-}
-
 async function getProducts(first = 100) {
     try {
         const response = await client.request(GET_PRODUCTS_QUERY, {
@@ -105,6 +57,10 @@ async function getProducts(first = 100) {
                 'Use Cases / Application': edge.node.useCases?.value,
                 Traffic: edge.node.traffic?.value,
                 'Sustainability Tag': edge.node.sustainabilityTag?.value,
+            }
+
+            if (edge.node.designedBy?.reference) {
+                product.designer = edge.node.designedBy.reference
             }
 
             if (edge.node.relatedProducts) {
@@ -218,6 +174,10 @@ async function getProductsByCollection(collectionHandle, first = 100) {
                 'Use Cases / Application': edge.node.useCases?.value,
                 Traffic: edge.node.traffic?.value,
                 'Sustainability Tag': edge.node.sustainabilityTag?.value,
+            }
+
+            if (edge.node.designedBy?.reference) {
+                product.designer = edge.node.designedBy.reference
             }
 
             if (edge.node.relatedProducts) {
@@ -343,6 +303,9 @@ const GET_PRODUCTS_QUERY = `
                     traffic: metafield(namespace: "custom", key: "traffic") {
                         value
                     }
+                    isPurchasable: metafield(namespace: "custom", key: "is_purchasable") {
+                        value
+                    }
                     useCases: metafield(namespace: "custom", key: "use_cases_application") {
                         value
                     }
@@ -357,6 +320,16 @@ const GET_PRODUCTS_QUERY = `
                     }
                     backing: metafield(namespace: "custom", key: "backing") {
                         value
+                    }
+                    designedBy: metafield(namespace: "custom", key: "designed_by") {
+                        reference {
+                            ... on Collection {
+                                id
+                                title
+                                handle
+                                description
+                            }
+                        }
                     }
                 }
             }
@@ -435,6 +408,16 @@ const GET_PRODUCTS_BY_COLLECTION_QUERY = `
                         backing: metafield(namespace: "custom", key: "backing") {
                             value
                         }
+                        designedBy: metafield(namespace: "custom", key: "designed_by") {
+                            reference {
+                                ... on Collection {
+                                    id
+                                    title
+                                    handle
+                                    description
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -442,14 +425,6 @@ const GET_PRODUCTS_BY_COLLECTION_QUERY = `
     }
 `
 
-// ============================================
-// CART OPERATIONS
-// ============================================
-
-/**
- * Create a new cart
- * @returns {Promise<{success: boolean, data?: {cart: object}, error?: object}>}
- */
 async function createCart() {
     try {
         const response = await client.request(CREATE_CART_MUTATION, {

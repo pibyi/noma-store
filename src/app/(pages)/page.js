@@ -4,6 +4,7 @@ import {
     RugsStory,
     CraftedSpaces,
     ExploreOpportunities,
+    ShopByDesigners,
 } from '../sections'
 
 // Revalidate this page every 60 seconds
@@ -15,6 +16,8 @@ const HomePage = async () => {
             <HeroSection />
             <div className="h-20 md:h-40" />
             <ProductGallery />
+            <div className="h-20 md:h-40" />
+            <ShopByDesigners />
             <div className="h-20 md:h-40" />
             <RugsStory />
             <div className="h-20 md:h-40" />
