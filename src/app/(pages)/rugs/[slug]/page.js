@@ -1,5 +1,10 @@
 import { notFound } from 'next/navigation'
-import { RugsImage, RugDetails, RelatedRugs } from '../../../sections'
+import {
+    RugsImage,
+    RugDetails,
+    RelatedRugs,
+    MeetTheDesigner,
+} from '../../../sections'
 import { getProducts } from '../../../actions/shopify'
 
 // Revalidate this page every 60 seconds
@@ -63,6 +68,8 @@ const RugSinglePage = async ({ params }) => {
                     </div>
                 </div>
                 <div className="h-20 md:h-40" />
+                <MeetTheDesigner designer={product.designer} />
+                <div className="h-20 md:h-40" />
             </div>
         )
     } catch (error) {
@@ -70,4 +77,5 @@ const RugSinglePage = async ({ params }) => {
         notFound()
     }
 }
+
 export default RugSinglePage

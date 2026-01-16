@@ -49,8 +49,7 @@ const DesignerSinglePage = async ({ params }) => {
                         {collection.title}
                     </h1>
                     <div className="max-w-[358px] md:max-w-[475px] heading-2">
-                        {collection.description ||
-                            'Explore unique pieces from this designer'}
+                        Explore unique pieces from this designer
                     </div>
                 </div>
                 {products.length > 0 ? (

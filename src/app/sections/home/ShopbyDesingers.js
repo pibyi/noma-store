@@ -22,15 +22,11 @@ const ShopByDesigners = async () => {
     return (
         <div>
             <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-12">
-                <div className="flex-1">
+                <div className="flex justify-between w-full items-center">
                     <h2 className="heading-1 max-w-[530px] md:mb-16 mb-6">
-                        Shop by Designers
+                        Introducing: Nomadory Designer Collections
                     </h2>
                     <div className="flex items-end justify-between">
-                        <p className="tracking-wider heading-2 max-w-[306px] md:max-w-[770px]">
-                            Discover unique collections from our talented
-                            designers
-                        </p>
                         <Link
                             className="hidden md:flex btn-brand-secondary"
                             href="/designers"
@@ -91,11 +87,6 @@ const ShopByDesigners = async () => {
                                             )
                                         })()}
                                     </h3>
-                                    {designer.description && (
-                                        <p className="text-sm mt-2 text-nomadory-primary/70">
-                                            {designer.description}
-                                        </p>
-                                    )}
                                 </div>
                             </div>
                         </Link>

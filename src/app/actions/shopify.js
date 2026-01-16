@@ -327,7 +327,12 @@ const GET_PRODUCTS_QUERY = `
                                 id
                                 title
                                 handle
-                                description
+                                descriptionHtml
+                                image {
+                                    altText
+                                    id
+                                    url
+                                }
                             }
                         }
                     }
@@ -414,7 +419,12 @@ const GET_PRODUCTS_BY_COLLECTION_QUERY = `
                                     id
                                     title
                                     handle
-                                    description
+                                    descriptionHtml
+                                    image {
+                                        altText
+                                        id
+                                        url
+                                    }
                                 }
                             }
                         }

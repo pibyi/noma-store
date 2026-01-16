@@ -140,7 +140,7 @@ const RugDetails = ({ product, products }) => {
                 </div>
             )}
 
-            <div className="flex items-center w-full gap-3 md:pr-20 mb-6 md:mb-12">
+            <div className="flex flex-col md:flex-row items-center w-full gap-3 md:pr-20 mb-6 md:mb-12">
                 {product?.isPurchasable && (
                     <AddToCartButton
                         variantId={product.variantId}
