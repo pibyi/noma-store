@@ -59,7 +59,7 @@ async function getProducts(first = 100) {
                 'Sustainability Tag': edge.node.sustainabilityTag?.value,
             }
             product.designer = {
-                name: edge.node.designedBy?.reference?.title,
+                title: edge.node.designedBy?.reference?.title,
                 descriptionHtml:
                     edge.node.designedBy?.reference?.descriptionHtml,
                 avatar: edge.node.designedBy?.reference?.designerAvatar
