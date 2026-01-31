@@ -58,9 +58,18 @@ async function getProducts(first = 100) {
                 Traffic: edge.node.traffic?.value,
                 'Sustainability Tag': edge.node.sustainabilityTag?.value,
             }
-
-            if (edge.node.designedBy?.reference) {
-                product.designer = edge.node.designedBy.reference
+            product.designer = {
+                name: edge.node.designedBy?.reference?.title,
+                descriptionHtml:
+                    edge.node.designedBy?.reference?.descriptionHtml,
+                avatar: edge.node.designedBy?.reference?.designerAvatar
+                    ?.reference?.image,
+                projects:
+                    edge.node.designedBy?.reference?.designerWorks?.references.edges.map(
+                        (edge) => {
+                            return edge.node?.image
+                        }
+                    ),
             }
 
             if (edge.node.relatedProducts) {
@@ -332,6 +341,32 @@ const GET_PRODUCTS_QUERY = `
                                     altText
                                     id
                                     url
+                                }
+                                designerWorks: metafield(namespace: "custom", key: "designer_works") {
+                                    references(first: 10) {
+                                        edges {
+                                            node {
+                                                ... on MediaImage {
+                                                    image {
+                                                        url
+                                                        altText
+                                                        width
+                                                        height
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                designerAvatar: metafield(namespace: "custom", key: "designer_avatar") {
+                                    reference {
+                                        ... on MediaImage {
+                                            image {
+                                                url
+                                                altText
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

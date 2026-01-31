@@ -12,7 +12,7 @@ const HeroSection = () => {
                     We are a manufacturer of <br /> handmade artisan rugs
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row justify-between gap-10 mt-5 md:mt-12">
+            {/* <div className="flex flex-col md:flex-row justify-between gap-10 mt-5 md:mt-12">
                 <Link
                     href="/rugs"
                     className="flex flex-col justify-end w-full md:w-[25.71%] md:order-1 order-2"
@@ -30,7 +30,7 @@ const HeroSection = () => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
