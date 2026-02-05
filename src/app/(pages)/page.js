@@ -13,11 +13,11 @@ export const revalidate = 60
 const HomePage = async () => {
     return (
         <div className="nomadory-container">
+            <ShopByDesigners />
+            <div className="h-20 md:h-40" />
             <HeroSection />
             <div className="h-20 md:h-40" />
             <ProductGallery />
-            <div className="h-20 md:h-40" />
-            <ShopByDesigners />
             <div className="h-20 md:h-40" />
             <RugsStory />
             <div className="h-20 md:h-40" />
