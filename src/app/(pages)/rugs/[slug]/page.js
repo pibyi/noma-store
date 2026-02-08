@@ -7,8 +7,62 @@ import {
 } from '../../../sections'
 import { getProducts } from '../../../actions/shopify'
 
-// Revalidate this page every 60 seconds
 export const revalidate = 60
+
+export async function generateMetadata({ params }) {
+    const { slug } = await params
+
+    try {
+        const results = await getProducts()
+        if (!results.success || !results.data || !results.data.products) {
+            return {}
+        }
+
+        const product = results.data.products.find((node) => node.slug === slug)
+        if (!product) {
+            return {}
+        }
+
+        const productImage = product.images?.[0]
+        const title = `${product.title} | Nomadory`
+        const description =
+            product.description || 'Woven by hand · Rooted in soul'
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title,
+                description,
+                url: `https://nomadory.com/rugs/${slug}`,
+                siteName: 'Nomadory',
+                ...(productImage && {
+                    images: [
+                        {
+                            url: productImage,
+                            width: 1200,
+                            height: 630,
+                            alt: product.title,
+                        },
+                    ],
+                }),
+                locale: 'en_US',
+                type: 'website',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                ...(productImage && {
+                    images: [productImage],
+                }),
+            },
+        }
+    } catch (error) {
+        console.error('Error generating metadata:', error)
+        return {}
+    }
+}
 
 const RugSinglePage = async ({ params }) => {
     const { slug } = await params

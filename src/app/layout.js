@@ -25,6 +25,28 @@ const cormorantGaramond = Cormorant_Garamond({
 export const metadata = {
     title: 'Nomadory',
     description: 'Woven by hand Rooted in soul',
+    openGraph: {
+        title: 'Nomadory',
+        description: 'Woven by hand · Rooted in soul',
+        url: 'https://nomadory.com',
+        siteName: 'Nomadory',
+        images: [
+            {
+                url: '/og-image.jpeg',
+                width: 1200,
+                height: 630,
+                alt: 'Nomadory - Woven by hand Rooted in soul',
+            },
+        ],
+        locale: 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Nomadory',
+        description: 'Woven by hand · Rooted in soul',
+        images: ['/og-image.jpeg'],
+    },
     icons: {
         icon: [
             { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
