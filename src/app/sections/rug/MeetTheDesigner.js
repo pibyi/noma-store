@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 const MeetTheDesigner = ({ designer }) => {
-    if (!designer) {
+    if (!designer?.title) {
         return null
     }
 
