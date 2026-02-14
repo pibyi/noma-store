@@ -64,6 +64,7 @@ async function getProducts(first = 100) {
                     edge.node.designedBy?.reference?.descriptionHtml,
                 avatar: edge.node.designedBy?.reference?.designerAvatar
                     ?.reference?.image,
+                handle: edge.node.designedBy?.reference?.handle,
                 projects:
                     edge.node.designedBy?.reference?.designerWorks?.references.edges.map(
                         (edge) => {

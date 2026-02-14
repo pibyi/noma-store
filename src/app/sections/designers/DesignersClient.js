@@ -50,14 +50,15 @@ const DesignersClient = ({ designers }) => {
                             key={designer.id || designer.handle}
                         >
                             {imageUrl && (
-                                <Image
-                                    src={imageUrl}
-                                    alt={designer.title}
-                                    width={330}
-                                    height={500}
-                                    className="w-full h-auto transition-transform duration-300 hover:scale-110"
-                                    quality={100}
-                                />
+                                <div className="relative w-full aspect-[3/4] overflow-hidden">
+                                    <Image
+                                        src={imageUrl}
+                                        alt={designer.title}
+                                        fill
+                                        className="object-cover transition-transform duration-300 hover:scale-110"
+                                        quality={100}
+                                    />
+                                </div>
                             )}
                             <div className="title mt-4 md:mt-8">
                                 <ProductName name={designer.title} />

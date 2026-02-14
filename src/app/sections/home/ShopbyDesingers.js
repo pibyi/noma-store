@@ -47,7 +47,7 @@ const ShopByDesigners = async () => {
                         >
                             <div className="h-full flex flex-col">
                                 <div className="overflow-hidden">
-                                    <div className="w-full h-auto flex items-center justify-center max-w-[320px] md:max-w-[540px]">
+                                    <div className="relative w-[320px] md:w-[540px] aspect-[3/4]">
                                         {designer.image?.url && (
                                             <Image
                                                 src={designer.image.url}
@@ -55,9 +55,8 @@ const ShopByDesigners = async () => {
                                                     designer.image.altText ||
                                                     designer.title
                                                 }
-                                                height={360}
-                                                width={270}
-                                                className="object-contain w-full h-full"
+                                                fill
+                                                className="object-cover"
                                                 quality={100}
                                             />
                                         )}
